@@ -4,6 +4,7 @@
 #include <AP_Mount/AP_Mount_config.h>
 #include <AP_Relay/AP_Relay_config.h>
 #include <GCS_MAVLink/GCS_config.h>
+#include <AP_SerialManager/AP_SerialManager.h>
 
 #ifndef AP_CAMERA_ENABLED
 #define AP_CAMERA_ENABLED 1

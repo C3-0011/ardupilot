@@ -14,6 +14,7 @@
 #include "AP_Camera_MAVLink.h"
 #include "AP_Camera_MAVLinkCamV2.h"
 #include "AP_Camera_Scripting.h"
+#include "AP_Camera_Runcam6.h"
 
 const AP_Param::GroupInfo AP_Camera::var_info[] = {
 
@@ -237,6 +238,12 @@ void AP_Camera::init()
         // check for Scripting driver
         case CameraType::SCRIPTING:
             _backends[instance] = NEW_NOTHROW AP_Camera_Scripting(*this, _params[instance], instance);
+            break;
+#endif
+#if AP_CAMERA_RUNCAM6_ENABLED
+        // check for Scripting driver
+        case CameraType::RUNCAM6:
+            _backends[instance] = NEW_NOTHROW AP_Camera_RUNCAM6(*this, _params[instance], instance);
             break;
 #endif
         case CameraType::NONE:

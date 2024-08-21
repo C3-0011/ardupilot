@@ -73,6 +73,9 @@ public:
 #if AP_CAMERA_SCRIPTING_ENABLED
         SCRIPTING = 7,  // Scripting backend
 #endif
+#if AP_CAMERA_RUNCAM6_ENABLED
+        RUNCAM6 = 8,
+#endif
     };
 
     // detect and initialise backends

@@ -29,7 +29,7 @@ bool AP_Camera_Runcam6::trigger_pic()
     // set camera taking photo
 
 
-    // set counter to move servo to off position after this many iterations of update (assumes 50hz update rate)
+    // set counter to enable next photo after this many iterations of update (assumes 50hz update rate)
     trigger_counter = constrain_float(_params.trigger_duration * 50, 0, UINT16_MAX);
 
     return true;
