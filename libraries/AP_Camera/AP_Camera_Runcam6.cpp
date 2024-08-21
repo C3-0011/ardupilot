@@ -7,6 +7,7 @@
 
 #include <AP_SerialManager/AP_SerialManager.h>
 #include <AP_Math/crc.h>
+#include <GCS.h>
 
 // update - should be called at 50hz
 void AP_Camera_Runcam6::update()
@@ -21,6 +22,7 @@ void AP_Camera_Runcam6::update()
 
 void AP_Camera_Runcam6::init()
 {
+    GCS_SEND_TEXT(MAV_SEVERITY_WARNING, "Runcam6 init");
     // configure serial communication
 
     AP_SerialManager *serial_manager = AP_SerialManager::get_singleton();

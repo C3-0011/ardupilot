@@ -50,7 +50,7 @@ private:
     AP_HAL::UARTDriver *uart;
     void start_uart();
     void drain();
-    void send_command();
+    void send_command(uint8_t cmd);
 };
 
 #endif // AP_CAMERA_RUNCAM6_ENABLED
