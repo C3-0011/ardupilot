@@ -18,6 +18,11 @@ void AP_Camera_Runcam6::update()
     AP_Camera_Backend::update();
 }
 
+void AP_Camera_Runcam6::init()
+{
+    // configure serial communication
+}
+
 // entry point to actually take a picture.  returns true on success
 bool AP_Camera_Runcam6::trigger_pic()
 {
@@ -33,6 +38,26 @@ bool AP_Camera_Runcam6::trigger_pic()
     trigger_counter = constrain_float(_params.trigger_duration * 50, 0, UINT16_MAX);
 
     return true;
+}
+
+void AP_Camera_Runcam6::start_uart()
+{
+    // 8N1 communication
+    uart->configure_parity(0);
+    uart->set_stop_bits(1);
+    uart->set_flow_control(AP_HAL::UARTDriver::FLOW_CONTROL_DISABLE);
+    uart->set_options(uart->get_options() | AP_HAL::UARTDriver::OPTION_NODMA_TX | AP_HAL::UARTDriver::OPTION_NODMA_RX);
+    uart->begin(115200, 10, 10);
+    uart->discard_input();
+}
+
+void AP_Camera_Runcam6::drain()
+{
+    if (!uart) {
+        return;
+    }
+
+    uart->discard_input();
 }
 
 #endif // AP_CAMERA_RUNCAM6_ENABLED

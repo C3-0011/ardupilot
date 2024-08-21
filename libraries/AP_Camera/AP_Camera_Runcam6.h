@@ -35,12 +35,19 @@ public:
     // update - should be called at 50hz
     void update() override;
 
+    // init and configure serial communication
+    void init();
+
     // entry point to actually take a picture.  returns true on success
     bool trigger_pic() override;
 
 private:
 
     uint16_t trigger_counter;   // count of number of cycles shutter should be held open
+
+    AP_HAL::UARTDriver *uart;
+    void start_uart();
+    void drain();
 };
 
 #endif // AP_CAMERA_RUNCAM6_ENABLED
