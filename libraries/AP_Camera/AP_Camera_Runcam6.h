@@ -51,6 +51,7 @@ private:
     void start_uart();
     void drain();
     void send_command(uint8_t cmd);
+    bool initialized = false;
 };
 
 #endif // AP_CAMERA_RUNCAM6_ENABLED

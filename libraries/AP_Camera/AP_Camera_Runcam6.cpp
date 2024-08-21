@@ -15,6 +15,8 @@ void AP_Camera_Runcam6::update()
 {
     if (trigger_counter > 0) {
         trigger_counter--;
+    } else {
+        if (!initialized) init();
     }
 
     // call parent update
@@ -34,8 +36,11 @@ void AP_Camera_Runcam6::init()
 
     if (uart == nullptr) 
     {
+        trigger_counter += 50;
         return;
     }
+
+    initialized = true;
 
     start_uart();
 }
@@ -46,7 +51,6 @@ bool AP_Camera_Runcam6::trigger_pic()
     GCS_SEND_TEXT(MAV_SEVERITY_WARNING, "Runcam6 Trigger");
     // fail if have not completed previous picture
     if (trigger_counter > 0) {
-        GCS_SEND_TEXT(MAV_SEVERITY_WARNING, "Runcam6 Trigger Fail");
         return false;
     }
 
@@ -91,6 +95,7 @@ void AP_Camera_Runcam6::send_command(uint8_t cmd)
     
     // is this device open?
     if (!uart) {
+        GCS_SEND_TEXT(MAV_SEVERITY_WARNING, "Runcam6 Send Command Fail");
         return;
     }
 
