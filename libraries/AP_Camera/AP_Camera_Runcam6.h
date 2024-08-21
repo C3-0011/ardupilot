@@ -36,7 +36,7 @@ public:
     void update() override;
 
     // init and configure serial communication
-    void init();
+    void init() override;
 
     // entry point to actually take a picture.  returns true on success
     bool trigger_pic() override;

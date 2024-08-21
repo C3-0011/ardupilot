@@ -7,7 +7,8 @@
 
 #include <AP_SerialManager/AP_SerialManager.h>
 #include <AP_Math/crc.h>
-#include <GCS.h>
+#include <AP_Math/AP_Math.h>
+#include "GCS_MAVLink/GCS.h"
 
 // update - should be called at 50hz
 void AP_Camera_Runcam6::update()
@@ -42,8 +43,10 @@ void AP_Camera_Runcam6::init()
 // entry point to actually take a picture.  returns true on success
 bool AP_Camera_Runcam6::trigger_pic()
 {
+    GCS_SEND_TEXT(MAV_SEVERITY_WARNING, "Runcam6 Trigger");
     // fail if have not completed previous picture
     if (trigger_counter > 0) {
+        GCS_SEND_TEXT(MAV_SEVERITY_WARNING, "Runcam6 Trigger Fail");
         return false;
     }
 
@@ -61,7 +64,7 @@ void AP_Camera_Runcam6::cam_mode_toggle()
 {
     // fail if have not completed previous picture
     if (trigger_counter > 0) {
-        return false;
+        return;
     }
 
     // set camera taking photo
@@ -85,6 +88,7 @@ void AP_Camera_Runcam6::start_uart()
 
 void AP_Camera_Runcam6::send_command(uint8_t cmd)
 {
+    
     // is this device open?
     if (!uart) {
         return;

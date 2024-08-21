@@ -243,7 +243,7 @@ void AP_Camera::init()
 #if AP_CAMERA_RUNCAM6_ENABLED
         // check for Runcam6 driver
         case CameraType::RUNCAM6:
-            _backends[instance] = NEW_NOTHROW AP_Camera_RUNCAM6(*this, _params[instance], instance);
+            _backends[instance] = NEW_NOTHROW AP_Camera_Runcam6(*this, _params[instance], instance);
             break;
 #endif
         case CameraType::NONE:
