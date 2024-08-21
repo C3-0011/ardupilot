@@ -41,6 +41,8 @@ public:
     // entry point to actually take a picture.  returns true on success
     bool trigger_pic() override;
 
+    void cam_mode_toggle() override;
+
 private:
 
     uint16_t trigger_counter;   // count of number of cycles shutter should be held open
@@ -48,6 +50,7 @@ private:
     AP_HAL::UARTDriver *uart;
     void start_uart();
     void drain();
+    void send_command();
 };
 
 #endif // AP_CAMERA_RUNCAM6_ENABLED
