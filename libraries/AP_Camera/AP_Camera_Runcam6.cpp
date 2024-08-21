@@ -1,5 +1,5 @@
-#define TRIGGER 0x03
-#define MODE 0x04
+#define TRIGGER 0x01
+#define MODE 0x02
 
 #include "AP_Camera_Runcam6.h"
 
