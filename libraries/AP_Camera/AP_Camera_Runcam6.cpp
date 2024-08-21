@@ -31,12 +31,12 @@ void AP_Camera_Runcam6::init()
     AP_SerialManager *serial_manager = AP_SerialManager::get_singleton();
 
     if (serial_manager) {
-        uart = serial_manager->find_serial(AP_SerialManager::SerialProtocol_RunCam, 0);
-    }
+        uart = serial_manager->find_serial(AP_SerialManager::SerialProtocol_Runcam6, 0);
+    } else GCS_SEND_TEXT(MAV_SEVERITY_WARNING, "NO SERIAL MANAGER");
 
     if (uart == nullptr) 
     {
-        trigger_counter += 50;
+        trigger_counter += 100;
         return;
     }
 
