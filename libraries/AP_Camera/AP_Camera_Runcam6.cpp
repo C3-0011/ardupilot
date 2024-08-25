@@ -8,6 +8,7 @@
 #include <AP_SerialManager/AP_SerialManager.h>
 #include <AP_Math/crc.h>
 #include <AP_Math/AP_Math.h>
+#include "GCS_MAVLink/GCS.h"
 
 // update - should be called at 50hz
 void AP_Camera_Runcam6::update()
@@ -91,8 +92,8 @@ void AP_Camera_Runcam6::start_uart()
     uart->configure_parity(0);
     uart->set_stop_bits(1);
     uart->set_flow_control(AP_HAL::UARTDriver::FLOW_CONTROL_DISABLE);
-    uart->set_options(uart->get_options() | AP_HAL::UARTDriver::OPTION_NODMA_TX | AP_HAL::UARTDriver::OPTION_NODMA_RX);
-    uart->begin(115200, 10, 10);
+    uart->set_options(uart->get_options() | AP_HAL::UARTDriver::OPTION_NODMA_TX | AP_HAL::UARTDriver::OPTION_NODMA_RX | AP_HAL::UARTDriver::OPTION_PULLUP_RX | AP_HAL::UARTDriver::OPTION_PULLUP_TX);
+    uart->begin(115200);
     uart->discard_input();
 }
 
@@ -101,8 +102,11 @@ void AP_Camera_Runcam6::send_command(uint8_t cmd)
     
     // is this device open?
     if (!uart) {
+        GCS_SEND_TEXT(MAV_SEVERITY_WARNING, "RUNCAM6 COMMAND SEND *****FAIL*****");
         return;
     }
+
+    GCS_SEND_TEXT(MAV_SEVERITY_WARNING, "RUNCAM6 COMMAND SENT");
 
     // both camera control messages I'm using start with 0xCC 0x01 and are only 4 bytes long,
     // this could be changed to accomodate other messages
